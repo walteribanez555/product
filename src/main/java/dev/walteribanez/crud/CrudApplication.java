@@ -3,6 +3,7 @@ package dev.walteribanez.crud;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -17,6 +18,13 @@ public class CrudApplication {
 		SpringApplication.run(CrudApplication.class, args);
 	}
 
+
+    //Add a default response to not return on aws health check port 80 as false or error
+
+	@GetMapping("/")
+	public String defaultResponse() {
+		return "Hello from Spring Boot!";
+	}
 
 
 
