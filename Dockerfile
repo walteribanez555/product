@@ -1,9 +1,26 @@
-FROM openjdk:11-jre-slim
+# Stage 1: Build the application
+FROM maven:3.8.5-openjdk-17 AS build
 
-# Copy the application JAR file to the container
-COPY target/crud-application.jar /app/crud-application.jar
+# Set the working directory in the container
+WORKDIR /app
 
-# Expose port 80 to be used by ECS
+# Copy the Maven project files
+COPY pom.xml .
+COPY src ./src
+
+# Build the project and skip tests to save time (optional)
+RUN mvn clean package -DskipTests
+
+# Stage 2: Run the application
+FROM openjdk:17-jdk-slim
+
+# Set the working directory for the application
+WORKDIR /app
+
+# Copy the built JAR file from the build stage
+COPY --from=build /app/target/*.jar app.jar
+
+# Expose the application's port (adjust if your app uses a different port)
 EXPOSE 80
 
 # Run the application (make sure the application listens on port 80)
