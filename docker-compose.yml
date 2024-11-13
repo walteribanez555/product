@@ -1,16 +1,12 @@
-version: '3.8'
-
 services:
   app:
     build:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "80:8080"
+      - "80:80"  # Map container port 8080 to host port 80
 
     environment:
-      # Pass the remote database connection details as environment variables
       DB_URL: ${DB_URL}
       DB_USERNAME: ${DB_USERNAME}
       DB_PASSWORD: ${DB_PASSWORD}
-    

@@ -19,10 +19,8 @@ RUN rm -rf /usr/local/tomcat/webapps/*
 # Copy the built WAR file from the build stage
 COPY --from=build /app/target/*.war /usr/local/tomcat/webapps/ROOT.war
 
-# Expose the application's port
-# EXPOSE 80
+# Expose the application's port (8080 inside container)
 EXPOSE 80
-
 
 # Start Tomcat
 CMD ["catalina.sh", "run"]
